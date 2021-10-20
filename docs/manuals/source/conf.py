@@ -108,7 +108,7 @@ extensions = [
     "sphinxcontrib.nwdiag",
     "sphinxcontrib.plantuml",
     "sphinxcontrib.seqdiag",
-    "crate.sphinx.csv",
+    #"crate.sphinx.csv",
     "m2r2",
     "sphinx_copybutton",
 ]

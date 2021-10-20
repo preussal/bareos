@@ -60,13 +60,8 @@ find_program(GCORE gcore)
 find_program(GDB gdb)
 find_program(DBX dbx)
 find_program(MDB mdb)
-find_program(XTRABACKUP xtrabackup)
 find_program(S3CMD s3cmd)
 find_program(MINIO minio)
-
-find_program(MYSQL mysql)
-find_program(MYSQLD mysqld PATH /opt/mysql/bin)
-find_program(MYSQL_INSTALL_DB mysql_install_db)
 
 if(POLICY CMP0109)
   cmake_policy(SET CMP0109 NEW)
@@ -77,3 +72,39 @@ else()
       PARENT_SCOPE
   )
 endif(POLICY CMP0109)
+
+# To test backups of mysql with percona xtrabackup, and mariadb with mariabackup,
+# we need to find the specific binaries in order to run our test databases:
+
+# For mysql:
+# XTRABACKUP_BINARY
+# MYSQL_DAEMON_BINARY
+# MYSQL_CLIENT_BINARY
+
+if(NOT DEFINED XTRABACKUP_BINARY)
+endif()
+
+if(NOT DEFINED MYSQL_DAEMON_BINARY)
+endif()
+
+if(NOT DEFINED MYSQL_CLIENT_BINARY)
+endif()
+
+
+
+# For mariadb:
+# MARIABACKUP_BINARY
+# MARIADB_DAEMON_BINARY
+# MARIADB_CLIENT_BINARY
+
+if(NOT DEFINED MARIABACKUP_BINARY)
+endif()
+
+if(NOT DEFINED MARIADB_DAEMON_BINARY)
+endif()
+
+if(NOT DEFINED MARIADB_CLIENT_BINARY)
+endif()
+
+if(NOT DEFINED MARIADB_MYSQL_INSTALL_DB_SCRIPT)
+endif()
