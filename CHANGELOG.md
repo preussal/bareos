@@ -62,6 +62,7 @@ and since Bareos version 20 this project adheres to [Semantic Versioning](https:
 - Fixed issue with error messages not showing up properly on windows systems [PR #959]
 - Fixed libdroplet xattr.h include issue by using sys/xattr.h [PR #985]
 - Fixed crash on bconsole when using autcomplete with tab [PR #969]
+- fix crash in "status scheduler" command when job->client is unset [PR #965]
 
 ### Added
 - systemtests: make database credentials configurable [PR #950]
