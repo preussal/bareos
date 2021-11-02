@@ -218,7 +218,7 @@ BuildRequires: sqlite-devel
 %endif
 %endif
 %if 0%{?build_mysql}
-BuildRequires: mysql-devel
+BuildRequires: mariadb-devel
 %endif
 BuildRequires: postgresql-devel
 BuildRequires: openssl
