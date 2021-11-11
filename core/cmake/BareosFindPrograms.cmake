@@ -82,29 +82,57 @@ endif(POLICY CMP0109)
 # MYSQL_CLIENT_BINARY
 
 if(NOT DEFINED XTRABACKUP_BINARY)
+  find_program(XTRABACKUP_BINARY xtrabackup)
 endif()
 
-if(NOT DEFINED MYSQL_DAEMON_BINARY)
-endif()
 
-if(NOT DEFINED MYSQL_CLIENT_BINARY)
-endif()
 
+macro(find_program_and_verify_version_string variable program version_string )
+  string(TOUPPER ${program} program_uppercase)
+  message(CHECK_START "Looking for ${program} in version ${version_string}")
+  find_program(${variable} ${program})
+  if (${variable})
+    execute_process(COMMAND ${${variable}} --version
+      OUTPUT_VARIABLE VERSION_STRING)
+    if (${VERSION_STRING} MATCHES "MySQL")
+      message(CHECK_PASS "OK: ${variable} ${${variable}} is ${version_string}")
+    else()
+      message(CHECK_PASS "${variable} ${${variable}} is not usable as it is not ${version_string}")
+      unset(${variable})
+    endif()
+  endif()
+endmacro()
+
+find_program_and_verify_version_string(MYSQL_DAEMON_BINARY mysqld MySQL)
+find_program_and_verify_version_string(MYSQL_CLIENT_BINARY mysql MySQL)
+
+message(STATUS "XTRABACKUP_BINARY: ${XTRABACKUP_BINARY}")
+message(STATUS "MYSQL_DAEMON_BINARY:${MYSQL_DAEMON_BINARY}")
+message(STATUS "MYSQL_CLIENT_BINARY:${MYSQL_CLIENT_BINARY}")
 
 
 # For mariadb:
 # MARIABACKUP_BINARY
 # MARIADB_DAEMON_BINARY
 # MARIADB_CLIENT_BINARY
+# MARIADB_MYSQL_INSTALL_DB_SCRIPT
 
 if(NOT DEFINED MARIABACKUP_BINARY)
+  find_program(MARIABACKUP_BINARY mariabackup)
 endif()
 
-if(NOT DEFINED MARIADB_DAEMON_BINARY)
-endif()
+find_program_and_verify_version_string(MARIADB_DAEMON_BINARY mysqld MariaDB)
+find_program_and_verify_version_string(MARIADB_CLIENT_BINARY mysql MariaDB)
 
-if(NOT DEFINED MARIADB_CLIENT_BINARY)
-endif()
 
 if(NOT DEFINED MARIADB_MYSQL_INSTALL_DB_SCRIPT)
+  find_program(MARIADB_MYSQL_INSTALL_DB_SCRIPT mysql_install_db)
 endif()
+
+
+message(STATUS "MARIABACKUP_BINARY: ${MARIABACKUP_BINARY}")
+message(STATUS "MARIADB_DAEMON_BINARY:${MARIADB_DAEMON_BINARY}")
+message(STATUS "MARIADB_CLIENT_BINARY: ${MARIADB_CLIENT_BINARY}")
+message(STATUS "MARIADB_MYSQL_INSTALL_DB_SCRIPT: ${MARIADB_MYSQL_INSTALL_DB_SCRIPT}")
+
+message(FATAL_ERROR "done")
