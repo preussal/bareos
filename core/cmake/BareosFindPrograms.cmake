@@ -109,8 +109,8 @@ macro(find_program_and_verify_version_string variable program version_substr_wan
   list(POP_BACK CMAKE_MESSAGE_INDENT "  ")
 endmacro()
 
-find_program_and_verify_version_string(MYSQL_DAEMON_BINARY mysqld MySQL "/opt/mysql/bin" "NO_DEFAULT_PATH")
-find_program_and_verify_version_string(MYSQL_CLIENT_BINARY mysql MySQL "/opt/mysql/bin" "NO_DEFAULT_PATH")
+find_program_and_verify_version_string(MYSQL_DAEMON_BINARY mysqld MySQL "" "")
+find_program_and_verify_version_string(MYSQL_CLIENT_BINARY mysql MySQL "" "")
 
 message(STATUS "XTRABACKUP_BINARY: ${XTRABACKUP_BINARY}")
 message(STATUS "MYSQL_DAEMON_BINARY:${MYSQL_DAEMON_BINARY}")
