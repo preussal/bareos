@@ -87,24 +87,30 @@ endif()
 
 
 
-macro(find_program_and_verify_version_string variable program version_string )
+macro(find_program_and_verify_version_string variable program version_substr_wanted path_to_search no_default_path)
+
   string(TOUPPER ${program} program_uppercase)
-  message(CHECK_START "Looking for ${program} in version ${version_string}")
-  find_program(${variable} ${program})
+  message(CHECK_START "Looking for ${program} in version ${version_substr_wanted}")
+  list(APPEND CMAKE_MESSAGE_INDENT "  ")
+  find_program(${variable} ${program} PATH ${path_to_search} ${no_default_path})
   if (${variable})
     execute_process(COMMAND ${${variable}} --version
-      OUTPUT_VARIABLE VERSION_STRING)
-    if (${VERSION_STRING} MATCHES "MySQL")
-      message(CHECK_PASS "OK: ${variable} ${${variable}} is ${version_string}")
+      OUTPUT_VARIABLE VERSION_STRING
+      OUTPUT_STRIP_TRAILING_WHITESPACE
+      )
+    message (STATUS "CANDIDATE IS ${VERSION_STRING}")
+    if (${VERSION_STRING} MATCHES ${version_substr_wanted})
+      message(CHECK_PASS "OK")
     else()
-      message(CHECK_PASS "${variable} ${${variable}} is not usable as it is not ${version_string}")
+      message(CHECK_PASS "NOT OK:  it is not ${version_substr_wanted}")
       unset(${variable})
     endif()
   endif()
+  list(POP_BACK CMAKE_MESSAGE_INDENT "  ")
 endmacro()
 
-find_program_and_verify_version_string(MYSQL_DAEMON_BINARY mysqld MySQL)
-find_program_and_verify_version_string(MYSQL_CLIENT_BINARY mysql MySQL)
+find_program_and_verify_version_string(MYSQL_DAEMON_BINARY mysqld MySQL "/opt/mysql/bin" "NO_DEFAULT_PATH")
+find_program_and_verify_version_string(MYSQL_CLIENT_BINARY mysql MySQL "/opt/mysql/bin" "NO_DEFAULT_PATH")
 
 message(STATUS "XTRABACKUP_BINARY: ${XTRABACKUP_BINARY}")
 message(STATUS "MYSQL_DAEMON_BINARY:${MYSQL_DAEMON_BINARY}")
@@ -121,8 +127,8 @@ if(NOT DEFINED MARIABACKUP_BINARY)
   find_program(MARIABACKUP_BINARY mariabackup)
 endif()
 
-find_program_and_verify_version_string(MARIADB_DAEMON_BINARY mysqld MariaDB)
-find_program_and_verify_version_string(MARIADB_CLIENT_BINARY mysql MariaDB)
+find_program_and_verify_version_string(MARIADB_DAEMON_BINARY mysqld MariaDB "/usr/libexec" "")
+find_program_and_verify_version_string(MARIADB_CLIENT_BINARY mysql MariaDB "" "")
 
 
 if(NOT DEFINED MARIADB_MYSQL_INSTALL_DB_SCRIPT)
@@ -135,4 +141,3 @@ message(STATUS "MARIADB_DAEMON_BINARY:${MARIADB_DAEMON_BINARY}")
 message(STATUS "MARIADB_CLIENT_BINARY: ${MARIADB_CLIENT_BINARY}")
 message(STATUS "MARIADB_MYSQL_INSTALL_DB_SCRIPT: ${MARIADB_MYSQL_INSTALL_DB_SCRIPT}")
 
-message(FATAL_ERROR "done")
