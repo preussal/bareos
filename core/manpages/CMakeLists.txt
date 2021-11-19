@@ -34,7 +34,6 @@ if(NOT client-only)
       bareos-sd.8
       bcopy.8
       bareos-dbcheck.8
-      bareos-dbcopy.8
       bextract.8
       bls.8
       bscan.8
