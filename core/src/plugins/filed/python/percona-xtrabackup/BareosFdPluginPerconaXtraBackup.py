@@ -197,7 +197,7 @@ class BareosFdPercona(BareosFdPluginBaseclass):
             # Try to load MySQLdb module
             hasMySQLdbModule = False
             try:
-                import MySQLdbNOTFOUND
+                import MySQLdb
 
                 hasMySQLdbModule = True
                 bareosfd.DebugMessage(100, "Imported module MySQLdb\n")
