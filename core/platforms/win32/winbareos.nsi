@@ -702,7 +702,6 @@ SectionIn 2 3
   SetOverwrite ifnewer
   File "bareos-dir.exe"
   File "bareos-dbcheck.exe"
-  File "bareos-dbcopy.exe"
   File "bsmtp.exe"
   File "bregex.exe"
   File "bwild.exe"
@@ -2031,7 +2030,6 @@ ConfDeleteSkip:
   Delete "$INSTDIR\bareos-sd.exe"
   Delete "$INSTDIR\bareos-dir.exe"
   Delete "$INSTDIR\bareos-dbcheck.exe"
-  Delete "$INSTDIR\bareos-dbcopy.exe"
   Delete "$INSTDIR\btape.exe"
   Delete "$INSTDIR\bls.exe"
   Delete "$INSTDIR\bextract.exe"
