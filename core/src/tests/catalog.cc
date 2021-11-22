@@ -53,8 +53,7 @@ int main(int argc, char** argv)
 
 class CatalogTest : public ::testing::Test {
  protected:
-  std::set<std::string> testable_catalog_backends{"postgresql", "sqlite3",
-                                                  "mysql"};
+  std::set<std::string> testable_catalog_backends{"postgresql"};
   std::string catalog_backend_name;
   std::string backend_dir;
   std::string config_dir;
