@@ -1866,6 +1866,7 @@
           "datatype": "STRING",
           "code": 0,
           "default_value": "postgresql",
+          "deprecated": true,
           "equals": true
         },
         "DbSocket": {
