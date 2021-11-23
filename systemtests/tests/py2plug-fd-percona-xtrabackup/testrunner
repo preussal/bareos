@@ -10,6 +10,10 @@ set -u
 TestName="$(basename "$(pwd)")"
 export TestName
 
+if [ "$USER" == "root"  ]; then
+ echo "This test cannot be run as user root."
+ exit 1;
+fi
 
 JobName=backup-bareos-fd
 #shellcheck source=../environment.in
