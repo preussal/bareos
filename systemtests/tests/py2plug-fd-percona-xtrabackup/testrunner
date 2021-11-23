@@ -27,8 +27,6 @@ XTRABACKUP="${XTRABACKUP_BINARY} --defaults-file=mysqldefaults"
 
 shutdown_mysql_server(){
 [ -f "mysql/data/${HOSTNAME}.pid" ] && kill "$(cat mysql/data/${HOSTNAME}.pid)" || :
-# kill running mysqld instance listening on our port
-sudo fuser "${test_db_port}"/tcp -k || :
 }
 
 startup_mysql_server(){
@@ -52,9 +50,6 @@ done
 
 
 shutdown_mysql_server
-
-# kill running mysqld instance listening on our port
-sudo fuser "${test_db_port}"/tcp -k || :
 
 rm -Rf mysql/data/*
 mkdir -p mysql/data/

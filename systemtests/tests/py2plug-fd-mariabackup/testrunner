@@ -51,9 +51,6 @@ done
 
 shutdown_mysql_server
 
-# kill running mysqld instance listening on our port
-sudo fuser "${test_db_port}"/tcp -k || :
-
 rm -Rf mysql/data/*
 mkdir -p mysql/data/
 # directory for socket, depending on length (socket length is limited)
